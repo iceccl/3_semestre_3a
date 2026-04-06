@@ -42,4 +42,31 @@ router.post('/subCategorias', async (req, res) => {
   }
 })
 
+// atualizando sub categoria
+router.put('/subCategorias/:id_subcategoria', async (req, res) => {
+  const { id_subcategoria } = req.params
+  const { nome, ativo, id_categoria } = req.body
+  try {
+    //Verificar se a sub categoria existe
+    const verificarSubCategoria = await BD.query(
+      `SELECT * FROM sub_categorias
+            WHERE id_subcategoria = $1`,
+      [id_subcategoria]
+    );
+
+    if (verificarSubCategoria.rows.length === 0) {
+      return res.status(404).json({ message: "Categoria não encontrado" });
+    }
+    // Atualiza todos os campos da tabela(PUT Substituição completa)
+    const comando = `UPDATE sub_categorias SET nome = $1, ativo = $2, id_categoria = $3 WHERE id_subcategoria = $4`;
+    const valores = [ nome, ativo, id_categoria, id_subcategoria ];
+    await BD.query(comando, valores);
+
+    return res.status(200).json("categoria foi atualizada com sucesso!");
+  } catch (error) {
+    console.error("Erro ao atualizar sub categoria", error.message);
+    return res.status(500).json({ error: "Erro ao atualizar sub categoria" });
+  }
+})
+
 export default router;

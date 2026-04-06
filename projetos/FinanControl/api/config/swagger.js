@@ -312,6 +312,55 @@ const documentacao = {
                 }
             }
         },
+        "/subCategorias/{id_subcategoria}": {
+            put: {
+                tags: ['SubCategorias'],
+                summary: 'Atualizar todos os dados da sub categoria',
+                description: 'Atualiza todos os dados de uma sub categoria existente, é necessário enviar todos os campos',
+                parameters: [
+                    {
+                        name: "id_subcategoria",
+                        in: "path",
+                        required: true,
+                        description: "ID da sub categoria a ser atualizada",
+                        schema: {
+                            type: 'integer',
+                            example: 1
+                        }
+                    }
+                ],
+                requestBody: {
+                    required: true,
+                    content:{
+                        "application/json":{
+                            schema: {$ref: "#/components/schemas/Atualizar_SubCategoria"},
+                            example: {
+                                nome: "carne",
+                                ativo: true,
+                                id_categoria: 1
+                            }
+                        }
+                    }
+                },
+                responses: {
+                    201: {
+                        description: "Sub Categoria atualizada com sucesso!"
+                    },
+                    404: {
+                        description: "Sub Categoria não encontrada",
+                        content: {
+                            "application/json":{
+                                example: {message: "Sub Categoria não encontrada"}
+                            }
+                        }
+                    },
+                    500: {
+                        description: "Erro interno no servidor"
+                    }
+                    
+                }
+            },
+        },
         "/transacoes": {
             get: {
                 tags:["Transações"],
@@ -455,6 +504,15 @@ const documentacao = {
             },
             Cadastrar_SubCategoria: {
                 type: 'object',
+                properties: {
+                    nome: {type: "string", example: "carne"},
+                    ativo: {type: 'boolean', example: true},
+                    id_categoria: {type: "integer", example: 1}
+                }
+            },
+            Atualizar_SubCategoria: {
+                type: 'object',
+                required: [ "nome", "ativo", "id_categoria" ],
                 properties: {
                     nome: {type: "string", example: "carne"},
                     ativo: {type: 'boolean', example: true},
