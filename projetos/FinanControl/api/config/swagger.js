@@ -10,8 +10,9 @@ const documentacao = {
     ],
     tags: [
         {name: 'Usuários', description: 'Operações relacionadas aos usuários'},
-        {name: 'Categorias', description: 'Operações relacionadas as categorias'},
-        {name: 'SubCategorias', description: 'Operações relacionadas as sub categorias'}
+        {name: 'Categorias', description: 'Operações relacionadas às categorias'},
+        {name: 'SubCategorias', description: 'Operações relacionadas às sub categorias'},
+        {name: 'Transações', description: 'Operações relacionadas às relaçõess'}
     ],
     paths: {
         "/usuarios": {
@@ -286,11 +287,77 @@ const documentacao = {
                         }
                     }
                 }
+            },
+            post: {
+                tags:['SubCategorias'],
+                summary: 'Cadastrar nova sub categoria',
+                description: "Recebe nome, ativo e id_categoria para cadastrar nova categoria",
+                requestBody: {
+                    required: true,
+                    content: {
+                        "application/json":{
+                            schema: {
+                                $ref: "#/components/schemas/Cadastrar_SubCategoria"
+                            }
+                        }
+                    }
+                },
+                responses: {
+                    201: {
+                        description: "Sub categoria cadastrads com sucesso!"
+                    },
+                    500: {
+                        description: "Erro interno no servidor"
+                    }
+                }
+            }
+        },
+        "/transacoes": {
+            get: {
+                tags:["Transações"],
+                summary: "Listar todos as Transações",
+                responses: {
+                    200:{
+                        description: "Dados obtidos com sucesso!",
+                        content: {
+                            "apllication/json":{
+                                schema:{
+                                    type: "array",
+                                    items: {$ref: '#/components/schemas/Listar_Transacoes'}
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            post: {
+                tags:['Transações'],
+                summary: 'Cadastrar nova transação',
+                description: "Recebe valor, descricao, data_registro, data_vencimento, data_pagamento, tipo, nome_categoria e nome_subcategoria para cadastrar nova transação",
+                requestBody: {
+                    required: true,
+                    content: {
+                        "application/json":{
+                            schema: {
+                                $ref: "#/components/schemas/Cadastrar_Transacao"
+                            }
+                        }
+                    }
+                },
+                responses: {
+                    201: {
+                        description: "Transacao cadastrado com sucesso!"
+                    },
+                    500: {
+                        description: "Erro interno no servidor"
+                    }
+                }
             }
         }
     },
     components:{
         schemas:{
+            // Usuários
             Listar_Usuarios:{
                 type: 'object',
                 properties: {
@@ -341,8 +408,9 @@ const documentacao = {
                 }    
                 }
             },
+
             // Categorias
-            Listar_Categorias:{
+            Listar_Categorias: {
                 type: 'object',
                 properties: {
                     id_categoria: {type: "integer", example: 1},
@@ -374,8 +442,9 @@ const documentacao = {
                     tipo: {type: "string", example: "E"}
                 }
             },
+
             // Sub Categorias
-            Listar_SubCategorias:{
+            Listar_SubCategorias: {
                 type: 'object',
                 properties: {
                     id_subcategoria: {type: "integer", example: 1},
@@ -384,6 +453,43 @@ const documentacao = {
                     id_categoria: {type: "integer", example: 1}
                 }
             },
+            Cadastrar_SubCategoria: {
+                type: 'object',
+                properties: {
+                    nome: {type: "string", example: "carne"},
+                    ativo: {type: 'boolean', example: true},
+                    id_categoria: {type: "integer", example: 1}
+                }
+            },
+
+            // Transações
+            Listar_Transacoes: {
+                type: 'object',
+                properties: {
+                    id_transacao: {type: "integer", example: 1},
+                    valor: {type: 'number', example: 150.00},
+                    descricao: {type: 'string', example: "Consulta médica"},
+                    data_registro: {type: "string", example: "06/04/2026"},
+                    data_vencimento: {type: "string", example: "17/04/2026"},
+                    data_pagamento: {type: "string", example: "25/04/2026"},
+                    tipo: {type: "string", enum:["E", "S"], example: "E"},
+                    nome_categoria: {type: "string", example: "Saúde"},
+                    nome_subcategoria: {type: "string", example: "Consulta médica"}
+                }
+            },
+            Cadastrar_Transacao: {
+                type: 'object',
+                properties: {
+                    valor: {type: 'number', example: 150.00},
+                    descricao: {type: 'string', example: "Consulta médica"},
+                    data_registro: {type: "string", example: "06/04/2026"},
+                    data_vencimento: {type: "string", example: "17/04/2026"},
+                    data_pagamento: {type: "string", example: "25/04/2026"},
+                    tipo: {type: "string", enum:["E", "S"], example: "E"},
+                    id_categoria: {type: "integer", example: 1},
+                    id_subcategoria: {type: "integer", example: 1}
+                }
+            }
         }
     }
 }

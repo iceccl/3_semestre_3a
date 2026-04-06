@@ -21,4 +21,25 @@ router.get("/subCategorias", async (req, res) => {
   }
 });
 
+// Cadastrando uma sub categoria
+router.post('/subCategorias', async (req, res) => {
+  const { nome, ativo, id_categoria } = req.body
+  try {
+    const comando = `
+      INSERT INTO 
+        sub_categorias (nome, ativo, id_categoria)
+      VALUES
+        ($1, $2, $3)
+    `
+    const valores = [nome, ativo, id_categoria]
+
+    await BD.query(comando, valores)
+
+    return res.status(201).json("Sub categoria cadastrada com sucesso!")
+  } catch (error) {
+    console.error("Erro ao cadastrar sub categoria, ", error.message)
+    return res.status(500).json(error.message)
+  }
+})
+
 export default router;
