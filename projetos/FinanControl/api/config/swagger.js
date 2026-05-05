@@ -402,7 +402,127 @@ const documentacao = {
                     }
                 }
             }
-        }
+        },
+        "/transacoes/tipo/{tipo}": {
+            get: {
+                tags:["Transações"],
+                summary: "Listar Transações pelo tipo (entrada ou saída)",
+                parameters: [
+                    {
+                        name: "tipo",
+                        im: "path",
+                        required: true,
+                        description: "tipo Transação (E = entrada / S = saída)",
+                        schema: {type: "String", enum: ["E", "S"], example: "S"}
+                    }
+                ],
+                responses: {
+                    200:{
+                        description: "Dados obtidos com sucesso!",
+                        content: {
+                            "apllication/json":{
+                                schema:{
+                                    type: "array",
+                                    items: {$ref: '#/components/schemas/Listar_Transacoes'}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transacao/categoria/{id_categoria}": {
+            get: {
+                tags:["Transações"],
+                summary: "Listar Transações pela categoria",
+                responses: {
+                    200:{
+                        description: "Dados obtidos com sucesso!",
+                        content: {
+                            "apllication/json":{
+                                schema:{
+                                    type: "array",
+                                    items: {$ref: '#/components/schemas/Listar_Transacoes'}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transacao/subcategoria/{id_subcategoria}": {
+            get: {
+                tags:["Transações"],
+                summary: "Listar Transações pela sub categoria",
+                responses: {
+                    200:{
+                        description: "Dados obtidos com sucesso!",
+                        content: {
+                            "apllication/json":{
+                                schema:{
+                                    type: "array",
+                                    items: {$ref: '#/components/schemas/Listar_Transacoes'}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transacoes/{id_transacao}": {
+            put: {
+                tags: ['Transações'],
+                summary: 'Atualizar todos os dados da Transacao',
+                description: 'Atualiza todos os dados de uma transacao existente, é necessário enviar todos os campos',
+                parameters: [
+                    {
+                        name: "id_Transacao",
+                        in: "path",
+                        required: true,
+                        description: "ID da Transacao a ser atualizada",
+                        schema: {
+                            type: 'integer',
+                            example: 1
+                        }
+                    }
+                ],
+                requestBody: {
+                    required: true,
+                    content:{
+                        "application/json":{
+                            schema: {$ref: "#/components/schemas/Atualizar_Transacao"},
+                            example: {
+                                valor: 150,
+                                descricao: "Consulta médica",
+                                data_registro: "06/04/2026",
+                                data_vencimento: "17/04/2026",
+                                data_pagamento: "25/04/2026",
+                                tipo: "E",
+                                id_categoria: 1,
+                                id_subcategoria: 1
+                            }
+                        }
+                    }
+                },
+                responses: {
+                    201: {
+                        description: "Transacao atualizada com sucesso!"
+                    },
+                    404: {
+                        description: "Transacao não encontrada",
+                        content: {
+                            "application/json":{
+                                example: {message: "Transacao não encontrada"}
+                            }
+                        }
+                    },
+                    500: {
+                        description: "Erro interno no servidor"
+                    }
+                    
+                }
+            },
+        },
     },
     components:{
         schemas:{
@@ -537,6 +657,20 @@ const documentacao = {
             },
             Cadastrar_Transacao: {
                 type: 'object',
+                properties: {
+                    valor: {type: 'number', example: 150.00},
+                    descricao: {type: 'string', example: "Consulta médica"},
+                    data_registro: {type: "string", example: "06/04/2026"},
+                    data_vencimento: {type: "string", example: "17/04/2026"},
+                    data_pagamento: {type: "string", example: "25/04/2026"},
+                    tipo: {type: "string", enum:["E", "S"], example: "E"},
+                    id_categoria: {type: "integer", example: 1},
+                    id_subcategoria: {type: "integer", example: 1}
+                }
+            },
+            Atualizar_Transacao: {
+                type: 'object',
+                required: [ "valor", "descricao", "data_registro", "data_vencimento", "data_pagamento", "tipo", "id_categoria", "id_subcategoria"],
                 properties: {
                     valor: {type: 'number', example: 150.00},
                     descricao: {type: 'string', example: "Consulta médica"},
