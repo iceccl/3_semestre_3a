@@ -1,11 +1,15 @@
 import { Router } from "express";
 import { BD } from "../../db.js";
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
+import {autenticarToken} from './middlewares/autenticacao.js'
 
 const router = Router();
 
+const SECRET_KEY = 'sua_chave_secreta'
+
 //Criando o endpoint para listar todos os usuarios
-router.get("/usuarios", async (req, res) => {
+router.get("/usuarios", autenticarToken, async (req, res) => {
   try {
     //cria uma variavel para enviar o comando sql
     const query = `SELECT * FROM usuarios ORDER BY id_usuario`;
@@ -164,9 +168,19 @@ router.post("/login", async (req, res) => {
     if (!senhaCorreta) {
       return res.status(401).json({ message: "Senha incorreta" });
     }
+    // gerando e retornando o token
+    // gerar o token com os dados do usuário logado
+    const token = jwt.sign(
+      {id_usuario: usuario.id_usuario, email: usuario.email},
+      SECRET_KEY,
+      // {expiresIn: '15m'} // Expira em quinze minutos
+    )
+
+
     //Login realizado com sucesso
     return res.status(200).json({
       message: "Login realizado",
+      token: token,
       usuario: { id_usuario: usuario.id_usuario, nome: usuario.nome },
     });
   } catch (error) {

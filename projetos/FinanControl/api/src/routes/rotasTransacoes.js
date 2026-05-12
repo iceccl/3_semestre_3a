@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { BD } from "../../db.js";
+import {autenticarToken} from './middlewares/autenticacao.js'
 
 const router = Router();
 
@@ -35,7 +36,7 @@ router.get("/transacoes", async (req, res) => {
 });
 
 // Enviar novas transações.
-router.post("/transacoes", async (req, res) => {
+router.post("/transacoes", autenticarToken, async (req, res) => {
   const {
     valor,
     descricao,
@@ -46,10 +47,11 @@ router.post("/transacoes", async (req, res) => {
     id_categoria,
     id_subcategoria,
   } = req.body;
+  const id_usuario = req.usuario.id_usuario;
   try {
     const comando = `
             INSERT INTO 
-                transacoes ( valor, descricao, data_registro, data_vencimento, data_pagamento, tipo, id_categoria, id_subcategoria )
+                transacoes ( valor, descricao, data_vencimento, data_pagamento, tipo, id_categoria, id_subcategoria, id_usuario )
             VALUES 
                 ($1, $2, $3, $4, $5, $6, $7, $8)
         `;
@@ -62,6 +64,7 @@ router.post("/transacoes", async (req, res) => {
       tipo,
       id_categoria,
       id_subcategoria,
+      id_usuario
     ];
 
     await BD.query(comando, valores);
@@ -218,4 +221,45 @@ router.put("/transacoes/id_transacao", async (req, res) => {
     return res.status(500).json({ error: "Erro ao atualizar transações" });
   }
 });
+
+// Agendar comporomissos, trabalhando com limites de datas e horarios
+router.post('/transacoes/agendar', autenticarToken, async (req, res) => {
+  const {valor, descricao, data_vencimento, data_pagamento, tipo, id_subcategoria, id_categoria} = req.body;
+
+  const id_usuario = req.usuario.id_usuario
+  try {
+    const consulta = `
+      SELECT id_transacao FROM transacoes
+      WHERE data_vencimento = TO_DATE($1, 'DD/MM/YYYY')
+      AND id_categoria = $2
+      AND id_usuario = $3
+    `
+
+    const conflito = await BD.query(consulta, [data_vencimento, id_categoria, id_usuario]);
+
+    if (conflito.rows.length > 0) {
+      return res.status(409).json({
+        message: 'Já existe um agendamento nesta categoria e nesta data'
+      })
+    }
+
+    const comando = `
+      INSERT INTO 
+        transacoes ( valor, descricao, data_vencimento, data_pagamento, tipo, id_categoria, id_subcategoria, id_usuario )
+      VALUES 
+        ($1, $2, $3, $4, $5, $6, $7, $8)
+    `
+    const valores = [ valor, descricao, data_vencimento, data_pagamento, tipo, id_subcategoria, id_categoria ];
+    await BD.query(comando, valores);
+    return res.status(201).json({
+      message: 'Agendamento realizado com sucesso!'
+    });
+  } catch (error) {
+    console.error('Erro no agendamento: ', error.message)
+    return res.status(500).json({
+      error: "Verifique o formato das datas, (DD/MM/YYYY)"
+    })
+  }
+})
+
 export default router;

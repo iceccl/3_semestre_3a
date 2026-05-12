@@ -19,6 +19,11 @@ const documentacao = {
             get: {
                 tags:["Usuários"],
                 summary: "Listar todos os usuários",
+                security: [
+                    {
+                        bearerAuth: []
+                    }
+                ],
                 responses: {
                     200:{
                         description: "Dados obtidos com sucesso!",
@@ -523,8 +528,38 @@ const documentacao = {
                 }
             },
         },
+        "/transacoes/agendar": {
+            post: {
+                tags: ["Transações"],
+                summary: "Agendar compromisso único",
+                description: "Esta rota verifica se o usuário possui um registro para a mesma data",
+                security: [{bearerAuth: []}],
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                $ref: "#/components/schemas/Cadastrar_Transacao"
+                            }
+                        }
+                    }
+                },
+                responses: {
+                    201: {
+                        description: "Agendamento realizado com sucesso!"
+                    }
+                }
+            }
+        }
     },
     components:{
+        securitySchemes:{
+            bearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+                description: 'insira o token JWT obtido no login'
+            }
+        },
         schemas:{
             // Usuários
             Listar_Usuarios:{
@@ -568,6 +603,11 @@ const documentacao = {
                 type: 'object',
                 properties:{
                 message: {type: 'string', example: 'Login realizado com sucesso'},
+                token:{
+                    type: 'string',
+                    description: 'Token JWT gerado ',
+                    example: 'jkdsjaiojeiwuhgrjnej',
+                },
                 usuario: {
                     type: 'object',
                     properties: {
