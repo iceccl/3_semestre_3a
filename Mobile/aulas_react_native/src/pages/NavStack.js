@@ -6,6 +6,8 @@ import Home from './Home';
 import Cadastro from './Cadastro';
 import Relatorio from "./Relatorio";
 import Grafico from './Grafico'
+import Login from './Login'
+import NavDrawer from './NavDrawer'
 
 // Criando uma constante que cria o estilo de navegação em Stack
 const Stack = createNativeStackNavigator();
@@ -13,7 +15,7 @@ const Stack = createNativeStackNavigator();
 const NavStack = () => {
     return(
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName="Login">
 
                 {/* Em name colocamos o nome da tela que outras telas chamarão */}
                 {/* Em Component Colocamos o componente que queremos renderizar */}
@@ -27,6 +29,31 @@ const NavStack = () => {
                         headerStyle: { backgroundColor: '#7fff62' },
                         headerTitleAlign: 'center',
                         headerTintColor: '#000000',
+                    }}
+                />
+
+                {/* Tela de Login */}
+                <Stack.Screen name="Login" component={Login}
+                    options={{
+                        title: 'Login',
+                        animation: 'fade_from_bottom',
+                        animationDuration: 300,
+                        headerStyle: { backgroundColor: '#7fff62' },
+                        headerTitleAlign: 'center',
+                        headerTintColor: '#000000',
+                    }}
+                />
+
+                {/* Tela de MenuPrincipal */}
+                <Stack.Screen name="MenuPrincipal" component={NavDrawer}
+                    options={{
+                        title: 'Menu Principal',
+                        animation: 'fade_from_bottom',
+                        animationDuration: 300,
+                        headerStyle: { backgroundColor: '#7fff62' },
+                        headerTitleAlign: 'center',
+                        headerTintColor: '#000000',
+                        headerShown: false,
                     }}
                 />
 

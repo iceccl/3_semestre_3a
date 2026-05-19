@@ -158,7 +158,7 @@ router.post("/login", async (req, res) => {
     //buscar usuario pelo email
     const comando = "SELECT * FROM usuarios WHERE email = $1";
     const resultado = await BD.query(comando, [email]);
-    if (resultado === 0) {
+    if (resultado.rows.length === 0) {
       return res.status(401).json({ message: "email incorreto" });
     }
     const usuario = resultado.rows[0];
@@ -187,7 +187,10 @@ router.post("/login", async (req, res) => {
     console.error("Erro ao realizar login", error.message);
     return res
       .status(500)
-      .json({ message: "Erro interno so servidor" + error.message });
+      .json({ 
+        message: "Erro interno no servidor"
+        + error.message 
+      });
   }
 });
 

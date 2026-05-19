@@ -12,7 +12,8 @@ const documentacao = {
         {name: 'Usuários', description: 'Operações relacionadas aos usuários'},
         {name: 'Categorias', description: 'Operações relacionadas às categorias'},
         {name: 'SubCategorias', description: 'Operações relacionadas às sub categorias'},
-        {name: 'Transações', description: 'Operações relacionadas às relaçõess'}
+        {name: 'Transações', description: 'Operações relacionadas às relaçõess'},
+        {name: 'Autenticação', description: 'Operações de autenticação'}
     ],
     paths: {
         "/usuarios": {
@@ -28,7 +29,7 @@ const documentacao = {
                     200:{
                         description: "Dados obtidos com sucesso!",
                         content: {
-                            "apllication/json":{
+                            "application/json":{
                                 schema:{
                                     type: "array",
                                     items: {$ref: '#/components/schemas/Listar_Usuarios'}
@@ -93,7 +94,7 @@ const documentacao = {
                     }
                 },
                 responses: {
-                    201: {
+                    200: {
                         description: "Usuário atualizado com sucesso!"
                     },
                     404: {
@@ -189,7 +190,7 @@ const documentacao = {
                     200:{
                         description: "Dados obtidos com sucesso!",
                         content: {
-                            "apllication/json":{
+                            "application/json":{
                                 schema:{
                                     type: "array",
                                     items: {$ref: '#/components/schemas/Listar_Categorias'}
@@ -256,7 +257,7 @@ const documentacao = {
                     }
                 },
                 responses: {
-                    201: {
+                    200: {
                         description: "Categoria atualizada com sucesso!"
                     },
                     404: {
@@ -274,6 +275,34 @@ const documentacao = {
                 }
 
             },
+            delete: {
+                tags: ['Categorias'],
+                summary: 'Remover Categoria',
+                description: 'Remove categoria existente pelo ID',
+                parameters: [
+                    {
+                        name: "id_categoria",
+                        in: "path",
+                        required: true,
+                        description: "ID da categoria a ser removida",
+                        schema: {
+                            type: 'integer',
+                            example: 1
+                        }
+                    }
+                ],
+                responses: {
+                    200: {
+                        description: "Categoria removida com sucesso!"
+                    },
+                    404: {
+                        description: "Categoria não encontrada"
+                    },
+                    500: {
+                        description: "Erro interno no servidor"
+                    }
+                }
+            }
         },
         "/subCategorias": {
             get: {
@@ -283,7 +312,7 @@ const documentacao = {
                     200:{
                         description: "Dados obtidos com sucesso!",
                         content: {
-                            "apllication/json":{
+                            "application/json":{
                                 schema:{
                                     type: "array",
                                     items: {$ref: '#/components/schemas/Listar_SubCategorias'}
@@ -348,7 +377,7 @@ const documentacao = {
                     }
                 },
                 responses: {
-                    201: {
+                    200: {
                         description: "Sub Categoria atualizada com sucesso!"
                     },
                     404: {
@@ -374,7 +403,7 @@ const documentacao = {
                     200:{
                         description: "Dados obtidos com sucesso!",
                         content: {
-                            "apllication/json":{
+                            "application/json":{
                                 schema:{
                                     type: "array",
                                     items: {$ref: '#/components/schemas/Listar_Transacoes'}
@@ -415,17 +444,17 @@ const documentacao = {
                 parameters: [
                     {
                         name: "tipo",
-                        im: "path",
+                        in: "path",
                         required: true,
                         description: "tipo Transação (E = entrada / S = saída)",
-                        schema: {type: "String", enum: ["E", "S"], example: "S"}
+                        schema: {type: "string", enum: ["E", "S"], example: "S"}
                     }
                 ],
                 responses: {
                     200:{
                         description: "Dados obtidos com sucesso!",
                         content: {
-                            "apllication/json":{
+                            "application/json":{
                                 schema:{
                                     type: "array",
                                     items: {$ref: '#/components/schemas/Listar_Transacoes'}
@@ -436,7 +465,7 @@ const documentacao = {
                 }
             }
         },
-        "/transacao/categoria/{id_categoria}": {
+        "/transacoes/categoria/{id_categoria}": {
             get: {
                 tags:["Transações"],
                 summary: "Listar Transações pela categoria",
@@ -444,7 +473,7 @@ const documentacao = {
                     200:{
                         description: "Dados obtidos com sucesso!",
                         content: {
-                            "apllication/json":{
+                            "application/json":{
                                 schema:{
                                     type: "array",
                                     items: {$ref: '#/components/schemas/Listar_Transacoes'}
@@ -455,7 +484,7 @@ const documentacao = {
                 }
             }
         },
-        "/transacao/subcategoria/{id_subcategoria}": {
+        "/transacoes/subcategoria/{id_subcategoria}": {
             get: {
                 tags:["Transações"],
                 summary: "Listar Transações pela sub categoria",
@@ -463,7 +492,7 @@ const documentacao = {
                     200:{
                         description: "Dados obtidos com sucesso!",
                         content: {
-                            "apllication/json":{
+                            "application/json":{
                                 schema:{
                                     type: "array",
                                     items: {$ref: '#/components/schemas/Listar_Transacoes'}
@@ -481,7 +510,7 @@ const documentacao = {
                 description: 'Atualiza todos os dados de uma transacao existente, é necessário enviar todos os campos',
                 parameters: [
                     {
-                        name: "id_Transacao",
+                        name: "id_transacao",
                         in: "path",
                         required: true,
                         description: "ID da Transacao a ser atualizada",
@@ -510,7 +539,7 @@ const documentacao = {
                     }
                 },
                 responses: {
-                    201: {
+                    200: {
                         description: "Transacao atualizada com sucesso!"
                     },
                     404: {
@@ -573,6 +602,7 @@ const documentacao = {
             },
             Cadastrar_Usuario: {
                 type: 'object',
+                required: ["nome", "email", "senha"],
                 properties: {
                     nome: {type: "string", example: "Ricardo"},
                     email: {type: "string", example: "ricardo2@email.com"},
@@ -592,14 +622,14 @@ const documentacao = {
             },
             Login_Usuario : {
                 type: 'object',
-                required: true,
+                required: ["email", "senha"],
                 properties: {
                     nome: {type: "string", example: "Ricardo"},
                     email: {type: "string", example: "ricardo2@email.com"},
                     senha: {type: "string", example: "Senha123"}
                 }
             },
-            Reposta_Login : {
+            Resposta_Login : {
                 type: 'object',
                 properties:{
                 message: {type: 'string', example: 'Login realizado com sucesso'},
@@ -632,6 +662,7 @@ const documentacao = {
             },
             Cadastrar_Categoria: {
                 type: 'object',
+                required: ["nome", "descricao", "cor", "icone", "tipo"],
                 properties: {
                     nome: {type: "string", example: "Alimentação"},
                     descricao: {type: 'text', example: "tipo alimentação"},
@@ -664,6 +695,7 @@ const documentacao = {
             },
             Cadastrar_SubCategoria: {
                 type: 'object',
+                required: ["nome", "ativo"],
                 properties: {
                     nome: {type: "string", example: "carne"},
                     ativo: {type: 'boolean', example: true},
@@ -697,6 +729,7 @@ const documentacao = {
             },
             Cadastrar_Transacao: {
                 type: 'object',
+                required: ["valor", "descricao", "data_registro", "data_vencimento", "data_pagamento", "tipo"],
                 properties: {
                     valor: {type: 'number', example: 150.00},
                     descricao: {type: 'string', example: "Consulta médica"},

@@ -10,10 +10,10 @@ const Aula03_exercicio = () => {
     ]
 
     const listaProdutos = [
-        {id: 1,foto: '../assets/Logo.jpg', nome: "Guitarra elétrica", categoria: 'Instrumentos musicais', preco: '900R$', estoque: 100},
-        {id: 2,foto: '../assets/Logo.jpg', nome: "Guitarra elétrica", categoria: 'Instrumentos musicais', preco: '900R$', estoque: 100},
-        {id: 3,foto: '../assets/Logo.jpg', nome: "Guitarra elétrica", categoria: 'Instrumentos musicais', preco: '900R$', estoque: 100},
-        {id: 4,foto: '../assets/Logo.jpg', nome: "Guitarra elétrica", categoria: 'Instrumentos musicais', preco: '900R$', estoque: 100},
+        {id: 1, nome: "Guitarra elétrica", categoria: 'Instrumentos musicais', preco: '900R$', estoque: 100},
+        {id: 2, nome: "Guitarra elétrica", categoria: 'Instrumentos musicais', preco: '900R$', estoque: 100},
+        {id: 3, nome: "Guitarra elétrica", categoria: 'Instrumentos musicais', preco: '900R$', estoque: 100},
+        {id: 4, nome: "Guitarra elétrica", categoria: 'Instrumentos musicais', preco: '900R$', estoque: 100},
     ]
 
     const exibirListaAlunos = ({ item }) => {
@@ -30,7 +30,7 @@ const Aula03_exercicio = () => {
     const exibirListaProdutos = ({ item }) => {
         return(
             <View style={estilos.card}>
-                <Image source={ require (item.foto)} style={{ width: 50, height: 50}}/>
+                <Image source={ require ("../assets/Logo.jpg")} style={{ width: 50, height: 50}}/>
                 <Text>Id: {item.id}</Text>
                 <Text>Nome: {item.nome}</Text>
                 <Text>Categoria: {item.categoria}</Text>

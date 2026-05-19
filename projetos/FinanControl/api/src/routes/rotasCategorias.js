@@ -139,20 +139,20 @@ router.patch("/categorias/:id_categoria", async (req, res) => {
   }
 });
 
-// router.delete("/usuarios/:id_usuario", async (req, res) => {
-//   const { id_usuario } = req.params;
-//   try {
-//     //Executa o comando de delete
-//     const comando = `DELETE FROM USUARIOS WHERE id_usuario = $1`;
-//     await BD.query(comando, [id_usuario]);
-//     return res.status(200).json({ message: "Usuario removido com sucesso" });
-//   } catch (error) {
-//     console.error("Erro ao atualizar usuario", error.message);
-//     return res
-//       .status(500)
-//       .json({ message: "Erro interno so servidor" + error.message });
-//   }
-// });
+router.delete("/categorias/:id_categoria", async (req, res) => {
+  const { id_categoria } = req.params;
+  try {
+    //Executa o comando de delete
+    const comando = `DELETE FROM categorias WHERE id_categoria = $1`;
+    await BD.query(comando, [id_categoria]);
+    return res.status(200).json({ message: "Categoria removido com sucesso" });
+  } catch (error) {
+    console.error("Erro ao deletar categoria", error.message);
+    return res
+      .status(500)
+      .json({ message: "Erro interno so servidor" + error.message });
+  }
+});
 
 // router.post("/login", async (req, res) => {
 //   const { email, senha } = req.body;
