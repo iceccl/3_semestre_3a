@@ -13,6 +13,7 @@ import Aula03 from "../../components/Aula03";
 import Aula04 from "../../components/Aula04";
 import Aula05 from "../../components/Aula05";
 import Aula06 from "../../components/Aula06";
+import Aula07 from "../../components/Aula07";
 
 // Criando uma constante que cria o estilo de navegação em Stack
 const drawer = createDrawerNavigator();
@@ -160,6 +161,21 @@ const NavDrawer = () => {
             // headerShown: false,
             headerStyle: { backgroundColor: "rgb(97, 248, 55)" },
             headerTintColor: "#3db247",
+            headerTitleAlign: "center",
+            animationDuration: 300,
+            animation: "fade_from_bottom",
+            drawerIcon: ({ size, color }) => <Entypo name="graduation-cap" size={size} color={color} />
+          }}
+        />
+
+        <drawer.Screen
+          name="Aula07"
+          component={Aula07}
+          options={{
+            title: "Aula07",
+            // headerShown: false,
+            headerStyle: { backgroundColor: "rgb(132, 255, 98)" },
+            headerTintColor: "#48b852",
             headerTitleAlign: "center",
             animationDuration: 300,
             animation: "fade_from_bottom",

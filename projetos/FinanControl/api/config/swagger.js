@@ -578,6 +578,69 @@ const documentacao = {
                     }
                 }
             }
+        },
+        "/dashboard": {
+            get: {
+                tags: ["Dashboard"],
+                summary: "Obtém todos os dados consolidados do dashboard",
+                description: "Retorna o resumo do mês, atual, gastos por categoria, maiores despesas",
+                responses: {
+                    200: {
+                        description: "Dados obtidos com sucesso!",
+                        content: {
+                            "Application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        resumoMesAtual: {
+                                            type: "Object",
+                                            properties: {
+                                                entradas: {type: "number", "example": 500},
+                                                saidas: {type: "number", "example": 250},
+                                                saldo: {type: "number", "example": 241}
+                                            }
+                                        },
+                                        resumoCategorias: {
+                                            type: "Object",
+                                            properties: {
+                                                nome: {type: "string", example: "Alimentacao"},
+                                                total: {type: "number", example: 256},
+                                            }
+                                        },
+                                        resumoMaioresGastos: {
+                                            type: "Object",
+                                            properties: {
+                                                descricao: {type: "string", example: "Aluguel"},
+                                                valor: {type: "number", example: 1500.00},
+                                                data: {type: "string", example: "10/05/2026"}
+                                            }
+                                        },
+                                        resumoUltimasTransacoes: {
+                                            type: "Object",
+                                            properties: {
+                                                descricao: {type: "string", example: "Aluguel"},
+                                                valor: {type: "number", example: 1500.00},
+                                                data: {type: "string", example: "10/05/2026"}
+                                            }
+                                        },
+                                        resumoEvolucao: {
+                                            type: "Object",
+                                            properties: {
+                                                mes: {type: "string", example: "05/2026"},
+                                                entradas: {type: "number", example: 1500.00},
+                                                saidas: {type: "number", example: 2000}
+                                            }
+                                        },
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    500: {
+                        description: "Erro interno no servidor."
+                    }
+                }
+            }
         }
     },
     components:{

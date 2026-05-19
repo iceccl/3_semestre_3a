@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { BD } from "../../db.js";
-import {autenticarToken} from './middlewares/autenticacao.js'
+import {autenticarToken} from '../middlewares/autenticacao.js'
 
 const router = Router();
 

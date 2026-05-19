@@ -28,11 +28,15 @@
 // });
 
 import NavStack from './src/pages/NavStack'
+import NavTopTab from './src/pages/NavTopTabs'
 import NavDrawer from './src/pages/NavDrawer'
+import NavBottomTab from './src/pages/NavBottomTabs'
 
 export default function App() {
   return(
-    <NavStack/>
+    // <NavStack/>
     // <NavDrawer/>
+    // <NavTopTab/>
+    <NavBottomTab/>
   )
 }

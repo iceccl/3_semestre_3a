@@ -1,0 +1,104 @@
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+
+// Importando as telas do projeto
+import Home from './Home';
+import Cadastro from './Cadastro';
+import Relatorio from "./Relatorio";
+import Grafico from './Grafico'
+import Login from './Login'
+import NavDrawer from './NavDrawer'
+
+// Criando uma constante que cria o estilo de navegação em Stack
+const Tab = createMaterialTopTabNavigator();
+
+const NavTopTab = () => {
+    return(
+        <NavigationContainer>
+            <Tab.Navigator initialRouteName="Login">
+
+                {/* Em name colocamos o nome da tela que outras telas chamarão */}
+                {/* Em Component Colocamos o componente que queremos renderizar */}
+
+                {/* Tela Principal */}
+                <Tab.Screen name="Home" component={Home}
+                    options={{
+                        title: 'Tela Principal',
+                        animation: 'fade_from_bottom',
+                        animationDuration: 300,
+                        headerStyle: { backgroundColor: '#7fff62' },
+                        headerTitleAlign: 'center',
+                        headerTintColor: '#000000',
+                    }}
+                />
+
+                {/* Tela de Login */}
+                <Tab.Screen name="Login" component={Login}
+                    options={{
+                        title: 'Login',
+                        animation: 'fade_from_bottom',
+                        animationDuration: 300,
+                        headerStyle: { backgroundColor: '#7fff62' },
+                        headerTitleAlign: 'center',
+                        headerTintColor: '#000000',
+                    }}
+                />
+
+                {/* Tela de MenuPrincipal */}
+                <Tab.Screen name="MenuPrincipal" component={NavDrawer}
+                    options={{
+                        title: 'Menu Principal',
+                        animation: 'fade_from_bottom',
+                        animationDuration: 300,
+                        headerStyle: { backgroundColor: '#7fff62' },
+                        headerTitleAlign: 'center',
+                        headerTintColor: '#000000',
+                        headerShown: false,
+                    }}
+                />
+
+                {/* Tela de Cadastro */}
+                <Tab.Screen name="Cadastro" component={Cadastro}
+                    options={{
+                        title: 'Tela de Cadastro',
+                        animation: 'fade_from_bottom',
+                        animationDuration: 300,
+                        headerStyle: { backgroundColor: '#ff9494' },
+                        headerTitleAlign: 'center',
+                        headerTintColor: '#000000',
+                    }}
+                />
+
+                {/* Tela de Relatório */}
+                <Tab.Screen name="Relatorio" component={Relatorio}
+                    options={{
+                        title: 'Tela de Relatório',
+                        animation: 'fade_from_bottom',
+                        animationDuration: 300,
+                        headerStyle: { backgroundColor: '#ffd484' },
+                        headerTitleAlign: 'center',
+                        headerTintColor: '#000000',
+                    }}
+                />
+
+                {/* Tela de Gráfico */}
+                <Tab.Screen name="Grafico" component={Grafico}
+                    options={{
+                        title: 'Tela de Gráfico',
+                        // headerShown: false,
+                        headerStyle: { backgroundColor: '#bbff77' },
+                        headerTintColor: '#108900',
+                        headerTitleAlign: 'center',
+                        animationDuration: 300,
+                        animation: 'fade_from_bottom',
+                        
+                    }}
+                />
+
+
+            </Tab.Navigator>
+        </NavigationContainer>
+    )
+}
+
+export default NavTopTab
