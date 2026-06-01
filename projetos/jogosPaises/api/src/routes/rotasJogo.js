@@ -16,6 +16,21 @@ router.get('/jogo', async(req, res) => {
         }
 
         const indice = Math.floor(Math.random() * todasQuestoes.length)
+        const perguntaSorteada = todasQuestoes[indice]
+
+        const opcoes = [
+            perguntaSorteada.opcao1,
+            perguntaSorteada.opcao2,
+            perguntaSorteada.opcao3,
+            perguntaSorteada.opcao4,
+        ]
+
+        return res.status(200).json({
+          // chave        valor
+            imagem: perguntaSorteada.foto,
+            opcoes: opcoes,
+            respostaCorreta: perguntaSorteada.resposta
+        })
     } catch (erro) {
         return res.status(500).json({erro: "Erro interno ao gerar rodada " + erro})
     }

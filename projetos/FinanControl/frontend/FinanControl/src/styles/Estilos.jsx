@@ -8,6 +8,6 @@ export const Estilos = {
     conteudo : {
         flex: 1,
         width: '100%',
-        backgroundColor: codFundo
+        backgroundColor: corFundo
     }
 }
