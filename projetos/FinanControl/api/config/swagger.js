@@ -6,7 +6,8 @@ const documentacao = {
         version: '1.0.0'
     },
     servers: [
-        {url: 'http://localhost:3000', description: 'localhost'}
+        {url: 'http://localhost:3000', description: 'localhost'},
+        {url: 'https://api-henna-nine-79.vercel.app', description: "Vercel"}
     ],
     tags: [
         {name: 'Usuários', description: 'Operações relacionadas aos usuários'},
@@ -687,9 +688,9 @@ const documentacao = {
                 type: 'object',
                 required: ["email", "senha"],
                 properties: {
-                    nome: {type: "string", example: "Ricardo"},
-                    email: {type: "string", example: "ricardo2@email.com"},
-                    senha: {type: "string", example: "Senha123"}
+                    nome: {type: "string", example: "Lyuz"},
+                    email: {type: "string", example: "Lyuz@email.com"},
+                    senha: {type: "string", example: "123"}
                 }
             },
             Resposta_Login : {

@@ -6,7 +6,7 @@ import {autenticarToken} from '../middlewares/autenticacao.js'
 
 const router = Router();
 
-const SECRET_KEY = 'sua_chave_secreta'
+const SECRET_KEY = 'minha_chave_secreta'
 
 //Criando o endpoint para listar todos os usuarios
 router.get("/usuarios", autenticarToken, async (req, res) => {

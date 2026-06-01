@@ -119,7 +119,7 @@ router.get("/transacoes/tipo/:tipo", async (req, res) => {
 });
 
 // Busca por categoria
-router.get("/transacao/categoria/:id_categoria", async (req, res) => {
+router.get("/transacoes/categorias/:id_categoria", async (req, res) => {
   const { id_categoria } = req.params;
   try {
     const comando = `
@@ -173,7 +173,7 @@ router.get("/transacoes/subcategoria/:id_subcategoria", async (req, res) => {
                 categorias c ON t.id_categoria = c.id_categoria
             LEFT JOIN
                 sub_categorias s ON t.id_subcategoria = s.id_subcategoria
-            WHERE s.subcategoria = $1
+            WHERE id_subcategoria = $1
             ORDER BY t.data_registro DESC
         `;
 
