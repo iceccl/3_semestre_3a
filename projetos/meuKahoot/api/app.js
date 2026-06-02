@@ -1,14 +1,14 @@
 import express from 'express';
-import {BD, testarConexao} from './db.js';
+import {BD, testarConexao} from './bd.js';
 import cors from 'cors'
 
-// importando rotas
-import rotasJogo from './src/routes/rotasJogo.js'
+// importando as rotas
+import rotasQuiz from './src/routes/rotasQuiz.js'
 
 const app = express();
 app.use(express.json());
 app.use(cors())
-app.use(rotasJogo)
+app.use(rotasQuiz)
 
 app.get('/', async(req, res) =>{
     await testarConexao();

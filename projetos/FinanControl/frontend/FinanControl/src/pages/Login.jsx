@@ -44,7 +44,7 @@ export default function Login() {
         return;
       }
       if (resposta.ok) {
-        localStorage.setItem("UsuarioLogado", JSON.stringify(dados));
+        localStorage.setItem("UsuarioLogado", JSON.stringify({...dados, lembrar}));
         navigate("/principal");
       } else {
         setMensagem("❌ email ou senha incorretos");
@@ -98,7 +98,10 @@ export default function Login() {
 
           <div style={EstilosLogin.entreOpcoes}>
             <div style={EstilosLogin.containerCheckbox}>
-                <input type="checkbox" style={EstilosLogin.checkbox}/>
+                <input type="checkbox" style={EstilosLogin.checkbox}
+                  checked={lembrar}
+                  onChange={(e) => setLembrar(e.target.checked)}
+                />
                 <label>Lembrar-me</label>
             </div>
             <a href="#" style={EstilosLogin.esqueceuSenha}>Esqueci a senha</a>

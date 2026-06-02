@@ -1,19 +1,19 @@
 import { Pool } from 'pg';
 
 // Conexão local - PGADMIN
-// const BD = new Pool({
-//     user: 'postgres',
-//     host: 'localhost',
-//     password: 'Admin',
-//     database: 'bd_finan_control_3a',
-//     port: 5432
-// })
-
-// Utilizando banco do supabase
 const BD = new Pool({
-    connectionString: "postgres://postgres.vynqcucefedsuslhzhmx:VQRoK70XPAEDw5mq@aws-1-us-east-1.pooler.supabase.com:5432/postgres",
-    ssl: {rejectUnauthorized: false}
+    user: 'postgres',
+    host: 'localhost',
+    password: 'Admin',
+    database: 'bd_finan_control_3a',
+    port: 5432
 })
+
+// // Utilizando banco do supabase
+// const BD = new Pool({
+//     connectionString: "postgres://postgres.vynqcucefedsuslhzhmx:VQRoK70XPAEDw5mq@aws-1-us-east-1.pooler.supabase.com:5432/postgres",
+//     ssl: {rejectUnauthorized: false}
+// })
 
 const testarConexao = async () =>{
     try{

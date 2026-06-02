@@ -12,7 +12,8 @@ export default function App() {
       setRespondido(false);
       setMensagem("");
 
-      const resposta = await fetch("http://localhost:3000/jogo");
+      // const resposta = await fetch("http://localhost:3000/jogo");
+      const resposta = await fetch("https://api-henna-nine-79.vercel.app/jogo");
       const dados = await resposta.json();
       setDadosJogo(dados);
     } catch (erro) {

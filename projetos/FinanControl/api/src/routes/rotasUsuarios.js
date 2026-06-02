@@ -181,7 +181,7 @@ router.post("/login", async (req, res) => {
     return res.status(200).json({
       message: "Login realizado",
       token: token,
-      usuario: { id_usuario: usuario.id_usuario, nome: usuario.nome },
+      usuario: { id_usuario: usuario.id_usuario, nome: usuario.nome, email: usuario.email },
     });
   } catch (error) {
     console.error("Erro ao realizar login", error.message);
