@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { enderecoServidor } from "../utils";
 import { MdEmail, MdLock, MdPassword, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { EstilosLogin } from "../styles/EstilosLogin";
@@ -55,6 +55,19 @@ export default function Login() {
       setMensagem(`Erro ao realizar login, ${error.message}`);
     }
   }
+
+  useEffect(() => {
+        async function buscarUsuario() {
+            const UsuarioLogado = await localStorage.getItem('UsuarioLogado')
+            if (UsuarioLogado != null) {
+              const usuario = JSON.parse(UsuarioLogado)
+              if (usuario.lembrar == true) {
+                navigate('/principal')
+              }
+            }
+        }
+        buscarUsuario()
+    }, [])
 
   return (
     <div style={EstilosLogin.container}>
