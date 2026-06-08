@@ -644,6 +644,14 @@ const documentacao = {
             }
         }
     },
+
+
+
+
+
+
+
+    
     components:{
         securitySchemes:{
             bearerAuth: {
