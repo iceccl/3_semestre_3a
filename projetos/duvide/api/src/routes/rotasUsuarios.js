@@ -10,7 +10,7 @@ const secretKey = 'duvide'
 
 
 // Criando o endpoint para listar todos os usuarios
-router.get('/usuarios', async (req, res) => {
+router.get('/usuarios', autenticarToken, async (req, res) => {
     try {
         // cria uma variavel para enviar o comando sql
         const comando = `SELECT * FROM usuarios ORDER BY id_usuario`
@@ -56,7 +56,7 @@ router.post('/usuarios', async (req, res) => {
 
 // endpoint para atualizar um unico usuário
 // recebendo o parametro pelo id e buscando o usuario
-router.put('/usuarios/:id_usuario', async (req, res) => {
+router.put('/usuarios/:id_usuario', autenticarToken, async (req, res) => {
     // Id recebido via parametro
     const { id_usuario } = req.params;
 
@@ -84,7 +84,7 @@ router.put('/usuarios/:id_usuario', async (req, res) => {
 })
 
 // Rota patch atualizando parcialmente as informações
-router.patch('/usuarios/:id_usuario', async (req, res) => {
+router.patch('/usuarios/:id_usuario', autenticarToken, async (req, res) => {
     const { id_usuario } = req.params;
     const { email, senha, nome, materia, tipo } = req.body;
 
@@ -146,7 +146,7 @@ router.patch('/usuarios/:id_usuario', async (req, res) => {
 
 })
 
-router.delete('/usuarios/:id_usuario', async (req, res) => {
+router.delete('/usuarios/:id_usuario', autenticarToken, async (req, res) => {
     const { id_usuario } = req.params;
     try{
         //Executa o comando de delete
@@ -183,8 +183,10 @@ router.post('/login', async (req, res) => {
 
         const token = jwt.sign({ id_usuario: usuario.id_usuario, nome: usuario.nome },
             secretKey,
-            { expiresIn: '15minutes' })
+            // { expiresIn: '15minutes' }
+        )
         //Login realizado com sucesso
+        
         return res.status(200).json({
             message: 'Login realizado',
             usuario: {

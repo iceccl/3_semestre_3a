@@ -1,16 +1,16 @@
- import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
     corPrincipal,
     corSecundaria,
     corTextos
-} from './Estilos';
+} from './src/styles/Estilos.js';
 
 const corCard = '#ffffff';
-const corTextoEscuro = '#333333';
+const corTextoEscuro = '#000000';
 const corBordaInput = '#e0e0e0';
 const corFundoInput = '#f7f7f7';
 const corIcone = '#888888';
-const corPlaceholder = '#aaaaaa';
+const corPlaceholder = '#3bebdd';
 export const coresLogin = {
     icone: corIcone,
     placeholder: corPlaceholder
@@ -19,6 +19,8 @@ export const coresLogin = {
 export const EstilosLogin = StyleSheet.create({
     container: {
         flex: 1,
+        height: '100%',
+        width: '100%'
     },
     gradiente: {
         flex: 1,

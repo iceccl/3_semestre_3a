@@ -9,7 +9,7 @@ const router = Router();
 const secretKey = 'duvide'
 
 // Listar todas as perguntas
-router.get('/perguntas', async (req, res) => {
+router.get('/perguntas', autenticarToken, async (req, res) => {
     try {
         const comando = `
             SELECT * FROM perguntas
@@ -57,7 +57,7 @@ router.get('/perguntas/:id_pergunta', async (req, res) => {
 });
 
 // Cadastrar pergunta
-router.post('/perguntas', async (req, res) => {
+router.post('/perguntas', autenticarToken, async (req, res) => {
     const { mensagem, modo_anonimo, data_envio, resposta, data_resposta } = req.body;
 
     try {
@@ -84,7 +84,7 @@ router.post('/perguntas', async (req, res) => {
 });
 
 // Atualização completa
-router.put('/perguntas/:id_pergunta', async (req, res) => {
+router.put('/perguntas/:id_pergunta', autenticarToken, async (req, res) => {
     const { id_pergunta } = req.params;
 
     const { mensagem, modo_anonimo, data_envio, resposta, data_resposta } = req.body;
@@ -129,7 +129,7 @@ router.put('/perguntas/:id_pergunta', async (req, res) => {
 });
 
 // Atualização parcial
-router.patch('/perguntas/:id_pergunta', async (req, res) => {
+router.patch('/perguntas/:id_pergunta', autenticarToken, async (req, res) => {
     const { id_pergunta } = req.params;
 
     const { mensagem,modo_anonimo,data_envio, resposta, data_resposta} = req.body;
@@ -209,7 +209,7 @@ router.patch('/perguntas/:id_pergunta', async (req, res) => {
 });
 
 // Deletar pergunta
-router.delete('/perguntas/:id_pergunta', async (req, res) => {
+router.delete('/perguntas/:id_pergunta', autenticarToken, async (req, res) => {
     const { id_pergunta } = req.params;
 
     try {
